@@ -1,5 +1,7 @@
 package library.controller;
 
+import java.util.List;
+import java.util.stream.Collectors;
 import library.dto.request.UserRequestDto;
 import library.dto.response.UserResponseDto;
 import library.model.User;
@@ -11,9 +13,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/users")

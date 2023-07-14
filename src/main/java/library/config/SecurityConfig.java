@@ -30,13 +30,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers(HttpMethod.GET, "/books",
                         "/books/{id}").hasAnyRole("LIBRARIAN", "READER")
-                .antMatchers(HttpMethod.GET, "/categories", "/categories/{id}", "/users", "/users/{id}")
+                .antMatchers(HttpMethod.GET, "/categories", "/categories/{id}", "/users",
+                        "/users/{id}")
                 .hasRole("LIBRARIAN")
                 .antMatchers(HttpMethod.POST, "/register").permitAll()
                 .antMatchers(HttpMethod.POST, "/books", "/categories").hasRole("LIBRARIAN")
                 .antMatchers(HttpMethod.PUT, "/books/{id}", "/categories/{id}", "/users/{id}")
                 .hasRole("LIBRARIAN")
-                .antMatchers(HttpMethod.DELETE, "/books/{id}", "/categories/{id}").hasRole("LIBRARIAN")
+                .antMatchers(HttpMethod.DELETE, "/books/{id}", "/categories/{id}")
+                .hasRole("LIBRARIAN")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
