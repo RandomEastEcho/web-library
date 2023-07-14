@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>All Books</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $.ajax({
+                type: 'GET',
+                url: '/books',
+                success: function(books) {
+                    displayBooks(books);
+                },
+                error: function(error) {
+                    console.log(error);
+                }
+            });
+
+            function displayBooks(books) {
+                var tableBody = $('#bookTableBody');
+                books.forEach(function(book) {
+                    var row = $('<tr>');
+                    row.append($('<td>').text(book.id));
+                    row.append($('<td>').text(book.name));
+                    row.append($('<td>').text(book.authorName));
+                    row.append($('<td>').text(book.description));
+                    row.append($('<td>').text(book.categoryName));
+                    tableBody.append(row);
+                });
+            }
+        });
+    </script>
+</head>
+<body>
+<h1>All Books</h1>
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Author</th>
+        <th>Description</th>
+        <th>Category</th>
+    </tr>
+    </thead>
+    <tbody id="bookTableBody">
+
+    </tbody>
+</table>
+</body>
+</html>

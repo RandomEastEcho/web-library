@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Reader Page</title>
+</head>
+<body>
+<h1>Welcome, Reader!</h1>
+<button onclick="seeAllBooks()">See all books</button>
+<button onclick="findBookById()">Find book by ID</button>
+<button onclick="logout()">Logout</button>
+
+<script>
+    function logout() {
+        window.location.href = "/login";
+    }
+
+    function seeAllBooks() {
+        window.location.href = "/books/all-books";
+    }
+
+    function findBookById() {
+        window.location.href = "/books/search-by-id-reader";
+    }
+</script>
+</body>
+</html>

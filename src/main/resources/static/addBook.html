@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Add Book</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    $(document).ready(function() {
+      $('form').submit(function(event) {
+        event.preventDefault();
+        var formData = {
+          name: $('#name').val(),
+          authorName: $('#authorName').val(),
+          description: $('#description').val(),
+          categoryId: $(`#categoryId`).val()
+        };
+        $.ajax({
+          type: 'POST',
+          url: '/books',
+          data: JSON.stringify(formData),
+          contentType: 'application/json',
+          success: function(response) {
+            alert("New book added");
+            console.log(response);
+          },
+          error: function(error) {
+            alert("Failed to add new book");
+            console.log(error);
+          }
+        });
+      });
+    });
+  </script>
+</head>
+<body>
+<h1>Add Book</h1>
+<form>
+  <label for="name">Name:</label>
+  <br><br>
+  <input type="text" id="name" name="name" required>
+  <br><br>
+  <label for="authorName">Author Name:</label>
+  <br><br>
+  <input type="text" id="authorName" name="authorName" required>
+  <br><br>
+  <label for="description">Book Description:</label>
+  <br><br>
+  <input type="text" id="description" name="description" required>
+  <br><br>
+  <label for="description">Category Id:</label>
+  <br><br>
+  <input type="text" id="categoryId" name="categoryId" required>
+  <br><br>
+  <input type="submit" value="Submit">
+  <a href="/books/all-books">All books</a>
+</form>
+</body>
+</html>

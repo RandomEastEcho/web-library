@@ -7,14 +7,15 @@ import library.dto.response.UserResponseDto;
 import library.model.User;
 import library.service.UserService;
 import library.service.mapper.DtoMapper;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-@RestController
+@Controller
 @RequestMapping("/users")
 public class UserController {
     private final UserService userService;
@@ -26,11 +27,28 @@ public class UserController {
         this.dtoMapper = dtoMapper;
     }
 
+    @GetMapping("/actions")
+    public String getBookActionsPage() {
+        return "forward:/static/usersActionsPage.html";
+    }
+
+    @GetMapping("/search-by-id")
+    public String getSearchPage() {
+        return "forward:/static/searchUser.html";
+    }
+
+    @ResponseBody
     @GetMapping("/{id}")
     public UserResponseDto getById(@PathVariable Long id) {
         return dtoMapper.toDto(userService.get(id));
     }
 
+    @GetMapping("/all-users")
+    public String getAllUsersPage() {
+        return "forward:/static/allUsers.html";
+    }
+
+    @ResponseBody
     @GetMapping
     public List<UserResponseDto> getAll() {
         return userService.getAll()
@@ -39,6 +57,7 @@ public class UserController {
                 .collect(Collectors.toList());
     }
 
+    @ResponseBody
     @PutMapping("/{id}")
     public UserResponseDto update(@PathVariable Long id,
                                   @RequestBody UserRequestDto userRequestDto) {

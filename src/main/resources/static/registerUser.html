@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>User Registration</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        function login() {
+            window.location.href = "/login";
+        }
+
+        $(document).ready(function () {
+            $("#registrationForm").submit(function (event) {
+                event.preventDefault(); // Prevent the form from submitting normally
+
+                var formData = {
+                    email: $("#email").val(),
+                    password: $("#password").val()
+                };
+
+                $.ajax({
+                    type: "POST",
+                    contentType: "application/json",
+                    url: "/register",
+                    data: JSON.stringify(formData),
+                    dataType: "json",
+                    success: function (data) {
+                        alert("Registration successful!");
+                        window.location.href = "/login";
+                    },
+                    error: function (error) {
+                        alert("Registration failed");
+                        console.log(error);
+                    }
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+<h1>User Registration</h1>
+
+<form id="registrationForm" method="post">
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" required>
+
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="password" required>
+
+    <input type="submit" value="Register">
+
+    <button onclick="login()">Login page</button>
+</form>
+</body>
+</html>

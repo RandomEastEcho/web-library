@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Search Book</title>
+</head>
+<body>
+<h1>Search Book</h1>
+<form id="searchForm">
+  <label for="bookId">Book ID:</label>
+  <input type="text" id="bookId" name="bookId" required>
+  <br><br>
+  <input type="submit" value="Search">
+</form>
+<br><br>
+<h2>Form to update Book</h2>
+<form id="updateForm">
+  <label for="bookName">Book Name:</label>
+  <br><br>
+  <input type="text" id="bookName" name="bookName">
+  <br><br>
+  <label for="authorName">Author Name:</label>
+  <br><br>
+  <input type="text" id="authorName" name="authorName">
+  <br><br>
+  <label for="description">Description:</label>
+  <br><br>
+  <textarea id="description" name="description"></textarea>
+  <br><br>
+  <label for="categoryId">Category ID:</label>
+  <br><br>
+  <input type="text" id="categoryId" name="categoryId">
+  <br><br>
+  <button id="updateButton" onclick="updateBook()">Update</button>
+  <button id="deleteButton" onclick="deleteBook()">Delete</button>
+</form>
+<div id="resultContainer"></div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+  $(document).ready(function() {
+    $('#searchForm').submit(function(event) {
+      event.preventDefault();
+      var bookId = $('#bookId').val();
+      window.location.href = '/books/' + bookId;
+    });
+
+    var url = window.location.href;
+    var bookId = url.substring(url.lastIndexOf('/') + 1);
+
+    if (bookId !== "") {
+      $.ajax({
+        type: 'GET',
+        url: '/categories/' + bookId,
+        success: function(book) {
+          displayBook(book);
+        },
+        error: function(error) {
+          console.log(error);
+        }
+      });
+    }
+
+    function displayBook(book) {
+      var resultContainer = $('#resultContainer');
+      $('#bookName').val(book.name);
+      $('#authorName').val(book.authorName);
+      $('#description').val(book.description);
+      $('#categoryId').val(book.categoryId);
+    }
+  });
+
+  function updateBook() {
+    var bookId = $('#bookId').val();
+    var bookName = $('#bookName').val();
+    var authorName = $('#authorName').val();
+    var description = $('#description').val();
+    var categoryId = $('#categoryId').val();
+
+    $.ajax({
+      type: 'PUT',
+      url: '/books/' + bookId,
+      contentType: 'application/json',
+      data: JSON.stringify({
+        name: bookName,
+        authorName: authorName,
+        description: description,
+        categoryId: categoryId
+      }),
+      success: function(updatedBook) {
+        alert('Book updated successfully');
+        window.location.href = '/books';
+      },
+      error: function(error) {
+        console.log(error);
+        alert('An error occurred while updating the book');
+      }
+    });
+  }
+
+  function deleteBook() {
+    var bookId = $('#bookId').val();
+
+    $.ajax({
+      type: 'DELETE',
+      url: '/books/' + bookId,
+      success: function() {
+        alert('Book deleted successfully');
+        window.location.href = '/books';
+      },
+      error: function(error) {
+        console.log(error);
+        alert('An error occurred while deleting the book');
+      }
+    });
+  }
+</script>
+</body>
+</html>
