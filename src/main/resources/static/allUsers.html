@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>All Users</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $.ajax({
+                type: 'GET',
+                url: '/users',
+                success: function(users) {
+                    displayUsers(users);
+                },
+                error: function(error) {
+                    console.log(error);
+                }
+            });
+
+            function displayUsers(users) {
+                var tableBody = $('#userTableBody');
+                users.forEach(function(user) {
+                    var row = $('<tr>');
+                    row.append($('<td>').text(user.id));
+                    row.append($('<td>').text(user.email));
+                    tableBody.append(row);
+                });
+            }
+        });
+    </script>
+</head>
+<body>
+<h1>All Users</h1>
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Email</th>
+    </tr>
+    </thead>
+    <tbody id="userTableBody">
+
+    </tbody>
+</table>
+</body>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>User Actions Page</title>
+</head>
+<body>
+<h1>Select Action To Perform</h1>
+<button onclick="searchUserById()">Search/update user by id</button>
+<button onclick="allUsers()">See all users in library</button>
+<button onclick="backToHome()">Back to main menu</button>
+<button onclick="logout()">Logout</button>
+
+<script>
+  function logout() {
+    window.location.href = "/login";
+  }
+
+  function searchUserById() {
+    window.location.href = "/users/search-by-id";
+  }
+
+  function allUsers() {
+    window.location.href = "/users/all-users";
+  }
+
+
+  function backToHome() {
+    window.location.href = "/home/librarian";
+  }
+</script>
+</body>
+</html>

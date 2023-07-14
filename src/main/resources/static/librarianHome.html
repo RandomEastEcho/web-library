@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Librarian Page</title>
+</head>
+<body>
+<h1>Welcome, Librarian!</h1>
+<button onclick="seeBooksAction()">See action with books</button>
+<button onclick="seeCategoryAction()">See action with categories</button>
+<button onclick="seeUserAction()">See action with users</button>
+<button onclick="logout()">Logout</button>
+
+<script>
+    function logout() {
+        window.location.href = "/login";
+    }
+
+    function seeBooksAction() {
+        window.location.href = "/books/actions";
+    }
+
+    function seeCategoryAction() {
+        window.location.href = "/categories/actions";
+    }
+
+    function seeUserAction() {
+        window.location.href = "/users/actions";
+    }
+</script>
+</body>
+</html>

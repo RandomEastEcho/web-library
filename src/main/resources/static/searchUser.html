@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Search User</title>
+</head>
+<body>
+<h1>Search User</h1>
+<form id="searchForm">
+  <label for="userId">User ID:</label>
+  <input type="text" id="userId" name="userId" required>
+  <br><br>
+  <input type="submit" value="Search">
+</form>
+<br><br>
+<h2>Form to update User</h2>
+<form id="updateForm">
+  <label for="userEmail">Email:</label>
+  <input type="email" id="userEmail" name="userEmail">
+  <br><br>
+  <label for="userPassword">Password:</label>
+  <input type="password" id="userPassword" name="userPassword">
+  <br><br>
+  <button id="updateButton" onclick="updateUser()">Update</button>
+</form>
+<div id="resultContainer"></div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+  $(document).ready(function() {
+    $('#searchForm').submit(function(event) {
+      event.preventDefault();
+      var userId = $('#userId').val();
+      window.location.href = '/users/' + userId;
+    });
+
+    var url = window.location.href;
+    var userId = url.substring(url.lastIndexOf('/') + 1);
+
+    $.ajax({
+      type: 'GET',
+      url: '/users/' + userId,
+      success: function(user) {
+        displayUser(user);
+      },
+      error: function(error) {
+        console.log(error);
+      }
+    });
+
+    function displayUser(user) {
+      var resultContainer = $('#resultContainer');
+      $('#userEmail').val(user.email);
+      $('#userPassword').val(user.password);
+    }
+  });
+
+  function updateUser() {
+    var userId = $('#userId').val();
+    var userEmail = $('#userEmail').val();
+    var userPassword = $('#userPassword').val();
+
+    $.ajax({
+      type: 'PUT',
+      url: '/users/' + userId,
+      contentType: 'application/json',
+      data: JSON.stringify({
+        email: userEmail,
+        password: userPassword
+      }),
+      success: function(updatedUser) {
+        alert('User updated successfully');
+        window.location.href = '/users';
+      },
+      error: function(error) {
+        console.log(error);
+        alert('An error occurred while updating the user');
+      }
+    });
+  }
+</script>
+</body>
+</html>

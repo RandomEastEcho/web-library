@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Books Actions Page</title>
+</head>
+<body>
+<h1>Select Action To Perform</h1>
+<button onclick="searchBookById()">Search/update/delete book by id</button>
+<button onclick="allBooks()">See all books in library</button>
+<button onclick="addBooks()">Add new book</button>
+<button onclick="backToHome()">Back to main menu</button>
+<button onclick="logout()">Logout</button>
+
+<script>
+  function logout() {
+    window.location.href = "/login";
+  }
+
+  function searchBookById() {
+    window.location.href = "/books/search-by-id";
+  }
+
+  function allBooks() {
+    window.location.href = "/books/all-books";
+  }
+
+  function addBooks() {
+    window.location.href = "/books/add";
+  }
+
+  function backToHome() {
+    window.location.href = "/home/librarian";
+  }
+</script>
+</body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Add Category</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    $(document).ready(function() {
+      $('form').submit(function(event) {
+        event.preventDefault();
+        var formData = {
+          name: $('#name').val()
+        };
+        $.ajax({
+          type: 'POST',
+          url: '/categories',
+          data: JSON.stringify(formData),
+          contentType: 'application/json',
+          success: function(response) {
+            alert("New category added")
+            console.log(response);
+          },
+          error: function(error) {
+            alert("Failed to add new category")
+            console.log(error);
+          }
+        });
+      });
+    });
+  </script>
+</head>
+<body>
+<h1>Add Category</h1>
+<form>
+  <label for="name">Name:</label>
+  <input type="text" id="name" name="name" required>
+  <br><br>
+  <input type="submit" value="Submit">
+  <a href="/categories/all-categories">All categories</a>
+</form>
+</body>
+</html>

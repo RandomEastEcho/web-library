@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Category Actions Page</title>
+</head>
+<body>
+<h1>Select Action To Perform</h1>
+<button onclick="searchCategoryById()">Search/update/delete category by id</button>
+<button onclick="allCategories()">See all categories in library</button>
+<button onclick="addCategory()">Add new category</button>
+<button onclick="backToHome()">Back to main menu</button>
+<button onclick="logout()">Logout</button>
+
+<script>
+  function logout() {
+    window.location.href = "/login";
+  }
+
+  function searchCategoryById() {
+    window.location.href = "/categories/search-by-id";
+  }
+
+  function allCategories() {
+    window.location.href = "/categories/all-categories";
+  }
+
+  function addCategory() {
+    window.location.href = "/categories/add";
+  }
+
+  function backToHome() {
+    window.location.href = "/home/librarian";
+  }
+</script>
+</body>
+</html>

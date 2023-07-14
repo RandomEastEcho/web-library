@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Search Category</title>
+</head>
+<body>
+<h1>Search Category</h1>
+<form id="searchForm">
+  <label for="categoryId">Category ID:</label>
+  <input type="text" id="categoryId" name="categoryId" required>
+  <br><br>
+  <input type="submit" value="Search">
+</form>
+<br><br>
+<h2>Form to update Category</h2>
+<form id="updateForm">
+  <label for="categoryName">Category Name:</label>
+  <input type="text" id="categoryName" name="categoryName">
+  <br><br>
+  <button id="updateButton" onclick="updateCategory()">Update</button>
+  <button id="deleteButton" onclick="deleteCategory()">Delete</button>
+</form>
+<div id="resultContainer"></div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+  $(document).ready(function() {
+    $('#searchForm').submit(function(event) {
+      event.preventDefault();
+      var categoryId = $('#categoryId').val();
+      window.location.href = '/categories/' + categoryId;
+    });
+
+    var url = window.location.href;
+    var categoryId = url.substring(url.lastIndexOf('/') + 1);
+
+    $.ajax({
+      type: 'GET',
+      url: '/categories/' + categoryId,
+      success: function(category) {
+        displayCategory(category);
+      },
+      error: function(error) {
+        console.log(error);
+      }
+    });
+
+    function displayCategory(category) {
+      var resultContainer = $('#resultContainer');
+      $('#categoryName').val(category.name);
+    }
+  });
+
+  function updateCategory() {
+    var categoryId = $('#categoryId').val();
+    var categoryName = $('#categoryName').val();
+
+    $.ajax({
+      type: 'PUT',
+      url: '/categories/' + categoryId,
+      contentType: 'application/json',
+      data: JSON.stringify({
+        name: categoryName
+      }),
+      success: function(updatedCategory) {
+        alert('Category updated successfully');
+        window.location.href = '/categories';
+      },
+      error: function(error) {
+        console.log(error);
+        alert('An error occurred while updating the category');
+      }
+    });
+  }
+
+  function deleteCategory() {
+    var categoryId = $('#categoryId').val();
+
+    $.ajax({
+      type: 'DELETE',
+      url: '/categories/' + categoryId,
+      success: function() {
+        alert('Category deleted successfully');
+        window.location.href = '/categories';
+      },
+      error: function(error) {
+        console.log(error);
+        alert('An error occurred while deleting the category');
+      }
+    });
+  }
+</script>
+</body>
+</html>
